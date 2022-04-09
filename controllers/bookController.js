@@ -35,6 +35,7 @@ const createBook = async (req, res) => {
             .catch(error => {
                 const res = { success: false, error: error }
             })
+
         res.json(response)
     }
     catch (e) {
@@ -147,25 +148,6 @@ const filterByStatus = async (req, res) => {
         console.log(err)
     })
 }
-
-        // await models.findAll({
-        //     where: { status_remove: 200 }
-        // })
-        // .then((filterBook) => {
-        //     const bookFormat = []
-        //     for(let i = 0; i < filterBook.length; i++) {
-        //            if(filterBook[i] ?.status_remove === stRemove.bookInStock){
-        //             filterBook[i].status_remove = "В НАЛИЧИИ"
-        //            }
-        //            bookFormat.push(filterBook[i])
-        //         }
-        //         res.send(filterBook)               
-        //    })
-        //    .catch((err) => {
-        //        console.log(err)
-        // })          
-    // }
-
 
 
 module.exports = {

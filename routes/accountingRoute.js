@@ -13,8 +13,7 @@ router.put("/accountings/:id", accountingController.updateAccount)
 router.delete("/accountings/:id", accountingController.deleteAccount)
 
 //Filter route
+router.get("/accountbystatus/:status", accountingController.filterAccountByStatus)
 
-router.get("/givedbooks", accountingController.giveBook)
-router.get("/returnedbooks", accountingController.returnBook)
 
 module.exports = router

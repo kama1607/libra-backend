@@ -43,10 +43,6 @@ const Accounting = db.define("accounting", {
         type: DataTypes.DATEONLY,
         allowNull: true
       },
-      notes: {
-        type: DataTypes.STRING(255),
-        allowNull: true
-      }
     },  {
         freezeTableName: true
     })

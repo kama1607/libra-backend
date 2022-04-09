@@ -13,15 +13,9 @@ router.put("/books/:id", bookController.updateBook)
 
 router.delete("/books/:id", bookController.deleteBook)
 
-// //filter book in stock
-// router.get("/onstock", bookController.filterInStock)
 
-//filter book in stock
+//filter books in
 router.get("/books-by-status/:status", bookController.filterByStatus)
 
-// //filterBook on stageTemove
-// router.get("/onstageremove", bookController.filterOnStageRemove)
 
-// //filter deleted book
-// router.get("/filterdeleted", bookController.filterRemoved)
 module.exports = router

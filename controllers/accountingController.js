@@ -17,8 +17,7 @@ const Author = require("../model/author")
                 student_id: req.body.student_id,
                 date_of_issue: req.body.date_of_issue,
                 status_book: req.body.status_book,
-                return_date: req.body.return_date,
-                notes: req.body.notes
+                return_date: req.body.return_date,     
             })
             .then((data) => {
                 const res = {success: true, data: data,
@@ -105,8 +104,7 @@ const Author = require("../model/author")
                student_id: data.student_id,
                date_of_issue: data.date_of_issue,
                status_book: data.status_book,
-               return_date: data.return_date,
-               notes: data.notes     
+               return_date: data.return_date    
             }, {
                 where: {id: id}
             })
@@ -148,47 +146,44 @@ const Author = require("../model/author")
         }
     }
 
-    const giveBook = async(req, res) => {
     
-            await models.findAll({
-                where: { status_book: 200}
-            })
-            .then((accs) => {
-                const accountFormat = []
-                for(let i = 0; i< accs.length; i++) {
-                    if(accs[i] ?.status_book === bookStatus.bookGived){
-                        accs[i].status_book = "ВЫДАНА"
-                    }
-                    accountFormat.push(accs[i])    
-                }
-                res.send(accs)
-            })
-            .catch((err) => {
-            console.log(err)
-        }) 
-    }
-
-    const returnBook = async(req, res) => {
+    const filterAccountByStatus = async (req, res) => {
+        const numberStatus = req.params.status
         await models.findAll({
-            where: { status_book: 250}
-        })
-        .then((accs) => {
-            const accountFormat = []
+            where: {status_book: numberStatus},
+            include: [{
+                model: Book,
+                as: "book", 
+                include: {
+                    model: Author,
+                    as: 'author'
+                }
+            },
+            {
+                model: Student,
+                as: "student",
+                include: {
+                    model: Class,
+                    as: "class"
+                }
+            }, 
+        ]
+        }).then(accs => {
             for(let i = 0; i< accs.length; i++) {
+                if(accs[i] ?.status_book === bookStatus.bookGived){
+                    accs[i].status_book = "ВЫДАНА"
+                }
                 if(accs[i] ?.status_book === bookStatus.bookReturned){
                     accs[i].status_book = "ПОЛУЧЕНО"
-                }
-                accountFormat.push(accs[i])    
+                }  
             }
             res.send(accs)
-        })
-            .catch((err) => {
+        }).catch((err) => {
             console.log(err)
-        }) 
-
+        })
     }
 
     module.exports = {
         createAccount, getAccs, updateAccount,
-        deleteAccount, giveBook, returnBook
+        deleteAccount, filterAccountByStatus
     }

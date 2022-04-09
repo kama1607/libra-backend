@@ -1,6 +1,5 @@
 const db = require("../config/dbConnect")
 const {Sequelize, DataTypes} = require("sequelize")
-const Role = requiere("../model/role.js")
 
 
 const User = db.define("user", {
@@ -34,15 +33,6 @@ const User = db.define("user", {
             notNull: true
         }
     },
-    role_id:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references:{
-            model: 'role',
-            key: 'id'
-        } 
-    },
-
     login: {
         type: DataTypes.STRING(255),
         allowNull: false,
@@ -61,16 +51,6 @@ const User = db.define("user", {
 }, {
     freezeTableName: true
 })
-
- User.belongsTo(Role, {
-    as: "role",
-    foreignKey: "role_id"
- })
-
- Role.hasMany(User, {
-    as: "users",
-    foreignKey: "role_id"
- })
 
 
 module.exports = User

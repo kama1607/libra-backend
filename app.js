@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 3000
 const cors = require("cors")
 const db = require("./config/dbConnect")
 
-// Report test
-//const reportR = require("./routes/reportRoute")
+const demoR = require("./reports/demoController")
 
+const accR = require("./reports/accountList")
 
 const authorR = require("./routes/authorRoute")
 const bookR = require("./routes/bookRoute")
@@ -43,15 +43,15 @@ app.use(express.json(), cors())
 // });
 
 
-
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(authorR)
 app.use(bookR)
 app.use(accountR)
 app.use(studentR)
 app.use(classR)
-//app.use(reportR)
 
+app.use(accR)
+app.use(demoR)
 
 app.listen(PORT, () => {
     console.log(`Server has been started on ${PORT} port...`)

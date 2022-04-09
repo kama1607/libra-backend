@@ -2,9 +2,9 @@ const {Router} = require("express")
 
 const router = Router()
 
-const reportPDF = require("../reports/generatePDF")
 
 
-router.get("/reportone", reportPDF.createInvoice)
+const reportController = require("../controllers/reportController")
 
+router.get("/reports", reportController.createBookReport)
 module.exports = router
