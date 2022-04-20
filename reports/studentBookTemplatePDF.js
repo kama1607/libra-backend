@@ -122,7 +122,7 @@ module.exports = (accounts) => {
       <tr class="heading">
         <td>ФИО ученика</td>
         <td>Класс</td>
-        <td>Буква</td>
+        <td></td>
         <td>Книга</td>
         <td>Дата выдачи</td>
       </tr>
