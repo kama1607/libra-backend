@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>На списание</title>
   <style>
-    .invoice-box {
+           .invoice-box {
            max-width: 800px;
            margin: auto;
-           padding: 30px;
+           padding: 10px;
            border: 1px solid #eee;
            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-           font-size: 16px;
+           font-size: 10px;
            line-height: 24px;
            font-family: 'Helvetica Neue', 'Helvetica';
            color: #555;
@@ -39,21 +39,20 @@
            padding-bottom: 20px;
            }
            .invoice-box table tr.top table td.title {
-           font-size: 45px;
-           line-height: 45px;
+           font-size: 25px;
+           line-height: 35px;
            color: #333;
            }
            .invoice-box table tr.information table td {
            padding-bottom: 40px;
+           padding-top:40px;
            }
            .invoice-box table tr.heading td {
            background: #eee;
            border-bottom: 1px solid #ddd;
            font-weight: bold;
            }
-           .invoice-box table tr.details td {
-           padding-bottom: 20px;
-           }
+           
            .invoice-box table tr.item td {
            border-bottom: 1px solid #eee;
            }
@@ -65,43 +64,44 @@
            font-weight: bold;
            }
            
-           /* @media only screen and (max-width: 600px) {
+           @media only screen and (max-width: 600px) {
            .invoice-box table tr.top table td {
            width: 100%;
            display: block;
            text-align: center;
-           } */
+           }
            .invoice-box table tr.information table td {
            width: 100%;
-           margin-top: 30px;
            display: block;
            text-align: center;
            }
-           /* } */
-
+           }
+           
            .header {
             text-align: right;
+            font-size: 11px;
+            text-align: right;
+            font-weight: bold
+
             }
             #title{
             text-align: center;
             margin-top: 4em;
             }
   </style>
-
-
 </head>
 <body>
   <div class="header">
-      <h3>Муниципальное бюджетное общеобразовательное
+      <p>Муниципальное бюджетное общеобразовательное
         учреждение г.Абакана
-      </h3>
-      <h3>"Средняя общеобразовательняя школа № 25"</h3>
-      <h3> Школьная библиотека</h3>
+      </p>
+      <p>"Средняя общеобразовательняя школа № 25"</p>
+      <p> Школьная библиотека</p>
     </div>  
-  <h2 id="title">Список книг на списание</h2>  
+  <h5 id="title">Список книг на списание</h5>  
 
   <div class="invoice-box">
-      <h2>№ акта списания ____</h2>
+      <h5>№ акта списания ____</h5>
     <table cellpadding="2" cellspacing="3">
       <tr class="heading">
         <td>Автор</td>
@@ -119,27 +119,23 @@
         <td>100</td>
         <td>Приключение</td>
       </tr>
-  </table>
-
-  
-    <tr class="information">
-      <td colspan="2">
-         <table>
-            <tr>
-               <td>
-                  Богинская Н.Ф. ___________ 
-               </td>
-               <td>
-                  Дата списания: ____________ 
-               </td>
-            </tr>
-         </table>
-      </td>
-   </tr>
-  
-
+  </table>  
+    <div>
+      <tr class="information">
+        <td colspan="2">
+           <table>
+              <tr>
+                 <td>
+                    Богинская Н.Ф. ___________ 
+                 </td>
+                 <td>
+                    Дата списания: 
+                 </td>
+              </tr>
+           </table>
+        </td>
+     </tr>
+    </div>
   </div>  
-  
-
 </body>
 </html>

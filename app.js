@@ -5,15 +5,18 @@ const PORT = process.env.PORT || 3000
 const cors = require("cors")
 const db = require("./config/dbConnect")
 
-const demoR = require("./reports/demoController")
-
+const demoR = require("./reports/studentInfoPDF")
+    
 const accR = require("./reports/accountList")
+const bkslR = require("./reports/bookList")
 
 const authorR = require("./routes/authorRoute")
 const bookR = require("./routes/bookRoute")
 const accountR = require("./routes/accountingRoute")
 const studentR = require("./routes/studentRoute")
 const classR = require("./routes/classRoute")
+
+
 
 db.authenticate().then(() =>{
     console.log("DB connected ...")
@@ -52,6 +55,7 @@ app.use(classR)
 
 app.use(accR)
 app.use(demoR)
+app.use(bkslR)
 
 app.listen(PORT, () => {
     console.log(`Server has been started on ${PORT} port...`)

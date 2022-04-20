@@ -1,64 +1,6 @@
 const models = require("../model/author")
 const Op = require("sequelize").Op
-/** 
-const createAuthor = async (req, res) => {
-        try{
-            // const author = new Author
-            const authorr = await models.create(req.body)
 
-            return res.status(201).json({
-                authorr
-            })
-        }catch (err){
-            return res.status(500).json({
-                err: err.message
-            })
-        }
-    } */
-
-    //Test 
-    // const createAuthor = async (req, res) => {
-    //     let name = req.body
-    //     let author = new models();
-
-    //     author.name = 'name'
-
-    //     author.save().then(r => res.send(r))
-
-    //     /** 
-    //     await models.create({name})
-    //         .then(data => res.send(data))
-    //         .catch(e => res.status(500).json(e)); */              
-    // }
-
-
-    //test 2
-    // const createAuthor = async( req, res) => {
-    //     try{
-    //         const authorr = await models.create({
-    //             name:req.body.name
-    //         })
-    //         await authorr.save()
-    //         if(!authorr){
-    //             return res.status(200).send({
-    //                 status: 400,
-    //                 message: "Author no found"
-    //             })
-    //         }
-    //         res.status(200).send({
-    //             status: 200,
-    //             message: "Author is added"
-    //         })
-    //     }
-    //     catch(error){
-    //         console.log(error)
-    //         return res.status(400).send({
-    //             message: "Don't insert data",
-    //             error: error,
-    //             status:400
-    //         })
-    //     }
-    // }
         
     const createAuthor = async (req, res) => {
         try{

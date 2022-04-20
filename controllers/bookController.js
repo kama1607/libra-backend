@@ -1,6 +1,6 @@
 const models = require("../model/book")
 const author = require("../model/author")
-//const {Op} = require("@sequelize/core")
+
 
 const stRemove = {
     bookInStock: 200,
@@ -43,23 +43,6 @@ const createBook = async (req, res) => {
     }
 }
 
-// const getBooks = async(req, res) => {
-//     try{
-//         const bookss = await models.findAll({
-//             include: {
-//                 model: author,
-//                 as: "author"
-//             },
-//         })
-//         return res.status(200).json({
-//             bookss
-//         })
-//     }   catch(err) {
-//         console.log(err)
-//     }
-// }
-
-//
 const getBooks = async (req, res) => {
     await models.findAll({
         ...includeBook
