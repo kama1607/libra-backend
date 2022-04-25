@@ -6,7 +6,6 @@ const Book = require("../model/book")
 
 const studentInfo = require("./studentFormInfo")
 
-
 const bookStatus = {
     bookGived:200,
     bookReturned: 250
@@ -54,6 +53,9 @@ router.get("/student-accouting/:id", async (req, res) => {
             if(student[i] ?.status_book === bookStatus.bookReturned){
                 student[i].status_book = "ПОЛУЧЕНО"
             }
+            if(student[i] ?.return_date === null){
+                student[i].return_date = ""
+            }
             bookFormat.push(student[i])   
         }
         res.send(student)
@@ -68,12 +70,20 @@ router.get("/student-accouting/:id", async (req, res) => {
 //
 router.post("/student-form/:id", async(req, res) => {
     const id = req.params.id
-    const accounting = await account.findAll({
+    await account.findAll({
         where: {student_id: id},
         ...includeAccounts
     })
-    pdf.create(studentInfo(accounting), {}).toFile(`${__dirname}/studentForm.pdf`, 
-    (err) => {
+    .then((accounting) => {
+        const bookFormat = []
+        for (let i = 0; i < accounting.length; i++) {
+            if(accounting[i] ?.return_date === null){
+                accounting[i].return_date = ""
+            }
+            bookFormat.push(accounting[i])   
+        }
+        pdf.create(studentInfo(accounting), {}).toFile(`${__dirname}/studentForm.pdf`, 
+        (err) => {
         if(err){
             res.send({
                 err: "report filed !!"
@@ -81,17 +91,13 @@ router.post("/student-form/:id", async(req, res) => {
         }
         res.send()
     }) 
+    })
+    
 })
 
 router.get("/give-student-form", (req, res) => {
     res.sendFile(`${__dirname}/studentForm.pdf`)
 })
-
-
-
-
-
-
 
 
 //count books and their sum
@@ -113,7 +119,6 @@ router.get("/demo-route", async(req, res) => {
     }
 })
 
-
 //demo update class
 router.get("/ayoshin", async(req, res) => {
     const s = await Student.increment({class_id:1}, {where: {student_id:15}})
@@ -121,11 +126,5 @@ router.get("/ayoshin", async(req, res) => {
         s
     })
 })
-
-
-
-
-
-
 
 module.exports = router
