@@ -107,6 +107,28 @@ const deleteBook = async (req, res) => {
     }
 }
 
+const getBookById = async (req, res) => {
+    try{
+        const id = req.params.id
+        const Book = await models.findOne({
+            where: {id: id}
+        })
+        if(Book){
+            return res.status(200).json({
+                Book
+            })
+        }
+        return res.status(404).send(
+            "Не найдена книга"
+        )
+
+    }catch(err){
+        return res.status(500).send(err.message)
+    }
+
+
+}
+
 const filterByStatus = async (req, res) => {
     const statusNumber = req.params.status
 
@@ -135,4 +157,5 @@ const filterByStatus = async (req, res) => {
 
 module.exports = {
     getBooks, createBook, updateBook,filterByStatus, deleteBook,
+    getBookById
 }
