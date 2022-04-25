@@ -127,7 +127,7 @@ const Author = require("../model/author")
             })
         }
     }
-
+    
 
     const deleteAccount = async (req, res) => {
         try{
