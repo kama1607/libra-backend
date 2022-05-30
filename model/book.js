@@ -1,5 +1,5 @@
 const db = require("../config/dbConnect")
-const {Sequelize, DataTypes, DATE} = require("sequelize")
+const { DataTypes } = require("sequelize")
 
 const Author = require("./author")
 

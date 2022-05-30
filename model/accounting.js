@@ -1,10 +1,7 @@
 const db = require("../config/dbConnect")
-const {Sequelize, DataTypes} = require("sequelize")
+const { DataTypes } = require("sequelize")
 const Student = require("../model/student")
 const Book = require("../model/book")
-const Author = require("../model/author")
-const Class = require("../model/class")
-
 
 const Accounting = db.define("accounting", {
     id: {
@@ -69,11 +66,5 @@ const Accounting = db.define("accounting", {
       //as: "accountings",
       foreignKey: "student_id"
     })
-
-
-    
-
-    
-    
 
 module.exports = Accounting

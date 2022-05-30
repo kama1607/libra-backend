@@ -1,5 +1,5 @@
 const db = require("../config/dbConnect")
-const {Sequelize, DataTypes} = require("sequelize")
+const { DataTypes } = require("sequelize")
 
 const Class = require("../model/class")
 const Student = db.define("student", {
@@ -45,12 +45,10 @@ const Student = db.define("student", {
 })
 
 Student.belongsTo(Class, {
-    //as: "class",
     foreignKey: 'class_id'
 })
 
 Class.hasOne(Student, {
-    //as: "students",
     foreignKey: "class_id"
 })
 
