@@ -6,7 +6,9 @@ const cors = require("cors")
 const db = require("./config/dbConnect")
 
 const demoR = require("./reports/studentInfoPDF")
-    
+ 
+const repASBC = require("./reports/reportAccountingStudentByClass")
+
 const accR = require("./reports/accountList")
 const bkslR = require("./reports/bookList")
 
@@ -15,7 +17,6 @@ const bookR = require("./routes/bookRoute")
 const accountR = require("./routes/accountingRoute")
 const studentR = require("./routes/studentRoute")
 const classR = require("./routes/classRoute")
-
 
 
 db.authenticate().then(() =>{
@@ -47,6 +48,7 @@ app.use(express.json(), cors())
 
 
 app.use(bodyParser.urlencoded({extended: true}))
+
 app.use(authorR)
 app.use(bookR)
 app.use(accountR)
@@ -56,6 +58,9 @@ app.use(classR)
 app.use(accR)
 app.use(demoR)
 app.use(bkslR)
+
+//test 
+app.use(repASBC)
 
 app.listen(PORT, () => {
     console.log(`Server has been started on ${PORT} port...`)
