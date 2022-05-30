@@ -1,29 +1,30 @@
 const models = require("../model/student")
-
 const clss = require("../model/class")
+const { QueryTypes, Sequelize } = require('sequelize');
+const db = require("../config/dbConnect")
 
-const createStudent = async (req, res) => {
-    try {
 
-        const body = req.body
-        const response = await models.create({
-            FIO: body.FIO,
-            class_id: body.class_id,
-            letter: body.letter
+const createStudent = async(req, res) => {
+    try{
+        const body = req.body 
+        const findStudent = await models.findOne({
+            where: {FIO: req.body.FIO}
         })
-            .then((data) => {
-                const res = {
-                    success: true, data: data,
-                    message: "create student"
-                }
-                return res
+        if(!findStudent){
+            const response = await models.create({
+                FIO: body.FIO.trim(),
+                class_id: body.class_id,
+                letter: body.letter.trim()
             })
-            .catch(error => {
-                const res = { success: false, error: error }
+            res.status(200).json(response)
+        } else {
+            res.status(404).send({
+                status: 404,
+                message: "Такой ученик уже имеется"
             })
-        res.json(response)
-    } catch (err) {
-        console.log(err)
+        }
+    }catch(err){
+        return res.status(500).send(err.message)
     }
 }
 
@@ -94,28 +95,6 @@ const deleteStudent = async (req, res) => {
     }
 }
 
-//1
-const firstClass = async (req, res) => {
-    try {
-        const filterOne = await models.findAll({
-            include: {
-                model: clss,
-                as: "class",
-                where: {
-                    number: 1
-                }
-            },
-        })
-        return res.status(200).json({
-            filterOne
-        })
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
-
-
 const getStudentsByClassId = async (req, res) => {
     try {
         const classId = req.params.id
@@ -139,7 +118,40 @@ const getStudentsByClassId = async (req, res) => {
     }
 }
 
+
+const classUpdate = async(req, res) => {
+    for(let classNumber = 10; classNumber > 0; classNumber--){
+        if(classNumber !== 11) {
+            await updateClasses(classNumber, classNumber + 1)
+        }
+    }
+    const updatedStudents = await models.findAll()        
+    .then((data) => {
+        const result = { success: true, data: data}
+        return result
+    })
+    .catch(error => {
+        const result = {success: false, error: error}
+        return result
+    })
+    res.send(updatedStudents)
+}
+
+
+async function updateClasses(fromNumber, toNumber){
+    await db.query(`
+    update student s join class c on c.id = s.class_id
+    set class_id = (select id from class where number = ${toNumber} limit 1)
+     where c.number = ${fromNumber};
+    `, {
+        type: QueryTypes.UPDATE
+    })
+}
+
+
 module.exports = {
     createStudent, getStudents, updateStudent,
-    deleteStudent, firstClass, getStudentsByClassId
+    deleteStudent, getStudentsByClassId,
+    classUpdate
 }
+
