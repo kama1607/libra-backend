@@ -15,6 +15,7 @@ router.delete("/students/:id", studentController.deleteStudent)
 //filter Route 
 router.get("/students-by-class/:id", studentController.getStudentsByClassId)
 
-router.get("/studentone", studentController.firstClass)
+//Update class for student
+router.get("/classup", studentController.classUpdate)
 
 module.exports = router
