@@ -1,25 +1,49 @@
 const models = require("../model/author")
-const Op = require("sequelize").Op
 
-        
-    const createAuthor = async (req, res) => {
+    // const createAuthor = async (req, res) => {
+    //     try{
+    //         const response = await models.create({
+    //             name: req.body.name
+    //         })
+    //         .then((data) => {
+    //             const res = {success: true, data:data, message:"created!!!!"}
+    //             return res
+    //         })
+    //         .catch(error => {
+    //             const res = {success: false, error: error}
+    //             return res
+    //         })
+    //         res.json(response)
+    //     }
+    //     catch(e) {
+    //         console.log(e)
+    //     }
+    // }
+
+    const createAuthor =  async(req, res) => {
         try{
-            const response = await models.create({
-                name: req.body.name
+            const findAuthor = await models.findOne({
+                where: {name: req.body.name}
             })
-            .then((data) => {
-                const res = {success: true, data:data, message:"created!!!!"}
-                return res
-            })
-            .catch(error => {
-                const res = {success: false, error: error}
-            })
-            res.json(response)
-        }
-        catch(e) {
-            console.log(e)
+            
+            if(!findAuthor){
+                const response = await models.create({
+                    name: req.body.name.trim()
+                })
+                res.status(200).json(response)
+            }else{
+                res.status(404).send({
+                    status:404,
+                    message: "Данные повторяются"
+                })
+            }
+               
+        }catch(error){
+            return res.status(500).send(error.message)
         }
     }
+    
+
 
     const getAuthors = async (req, res) => {
         try {
