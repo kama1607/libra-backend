@@ -1,4 +1,5 @@
 const models = require("../model/accounting")
+const { Op } = require("sequelize")
 
 const bookStatus = {
     bookGived:200,
@@ -34,28 +35,6 @@ const Author = require("../model/author")
         }
     }
 
-
-    // const getAccs = async(req, res) => {
-    //     try {
-    //         const accs = await models.findAll({
-    //             include: [{
-    //                 model: Book,
-    //                 as: "book"
-    //             }, 
-    //             {
-    //                model: Student,
-    //                as: "student" 
-    //             }
-    //         ]
-    //         })
-    //         return res.status(200).json({
-    //             accs
-    //         })
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // }
-
     const getAccs = async (req, res) => {
         await models.findAll({
             include: [{
@@ -71,7 +50,7 @@ const Author = require("../model/author")
                 as: "student",
                 include: {
                     model: Class,
-                    as: "class"
+                    as: "class",
                 }
             }, 
         ]
@@ -183,7 +162,48 @@ const Author = require("../model/author")
         })
     }
 
+    const getAccountByDates = async(req, res) => {
+        await models.findAll({  
+            where: { date_of_issue: {
+                [Op.between]: [ req.body.start, req.body.end ]
+            }}, 
+            include: [{
+                model: Book,
+                as: "book", 
+                include: {
+                    model: Author,
+                    as: 'author'
+                }
+            },
+            {
+                model: Student,
+                as: "student",
+                include: {
+                    model: Class,
+                    as: "class",
+                }
+            }, 
+        ]
+        })
+        .then(accsByDate => {
+            for(let i = 0; i< accsByDate.length; i++) {
+                if(accsByDate[i] ?.status_book === bookStatus.bookGived){
+                    accsByDate[i].status_book = "ВЫДАНА"
+                }
+                if(accsByDate[i] ?.status_book === bookStatus.bookReturned){
+                    accsByDate[i].status_book = "ПОЛУЧЕНО"
+                }  
+            }
+            res.send(accsByDate)
+        })
+    }
+
+
+
+
     module.exports = {
         createAccount, getAccs, updateAccount,
-        deleteAccount, filterAccountByStatus
+        deleteAccount, filterAccountByStatus,
+        getAccountByDates
+    
     }
