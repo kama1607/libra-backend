@@ -15,5 +15,8 @@ router.delete("/accountings/:id", accountingController.deleteAccount)
 //Filter route
 router.get("/accountbystatus/:status", accountingController.filterAccountByStatus)
 
+//filterData route
+router.post("/accountsbydates", accountingController.getAccountByDates)
+
 
 module.exports = router
